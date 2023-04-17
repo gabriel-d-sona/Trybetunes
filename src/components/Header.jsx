@@ -1,23 +1,34 @@
 import React from 'react';
-// import { getUser } from '../services/userAPI';
-// import Carregando from './Carregand';
+import { getUser } from '../services/userAPI';
+import Carregando from './Carregando';
 
 class Header extends React.Component {
-  // Chamar getUser
-// getUser = () => {
-
-  // }
-
-  // chamandoGetUser = () => {
-  //   getUser();
-  // };
+  state = {
+    name: '',
+    carregando: false,
+  };
 
   componentDidMount() {
-
+    this.setState({ carregando: true });
+    getUser()
+      .then((user) => {
+        this.setState({ name: user.name, carregando: false });
+      });
   }
 
   render() {
-    return (<header data-testid="header-component">Header</header>);
+    const { name, carregando } = this.state;
+    return (
+      <header data-testid="header-component">
+        {
+          carregando ? (
+            <Carregando />
+          ) : (
+            <h2 data-testid="header-user-name">{ name }</h2>
+          )
+        }
+      </header>
+    );
   }
 }
 

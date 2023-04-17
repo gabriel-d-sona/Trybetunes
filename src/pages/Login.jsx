@@ -34,28 +34,30 @@ class Login extends React.Component {
     }
     return (
       <div data-testid="page-login">
-        {carregando ? (
-          <Carregando />
-        ) : (
-          <div>
-            <input
-              id="name-input"
-              data-testid="login-name-input"
-              type="text"
-              name="name"
-              value={ name }
-              onChange={ this.onInputChange }
-            />
-            <button
-              id="btn"
-              data-testid="login-submit-button"
-              disabled={ btnDisable }
-              onClick={ this.btn }
-            >
-              Entrar
-            </button>
-          </div>
-        )}
+        {
+          carregando ? (
+            <Carregando />
+          ) : (
+            <div>
+              <input
+                id="name-input"
+                data-testid="login-name-input"
+                type="text"
+                name="name"
+                value={ name }
+                onChange={ this.onInputChange }
+              />
+              <button
+                id="btn"
+                data-testid="login-submit-button"
+                disabled={ btnDisable }
+                onClick={ this.btn }
+              >
+                Entrar
+              </button>
+            </div>
+          )
+        }
       </div>
     );
   }
