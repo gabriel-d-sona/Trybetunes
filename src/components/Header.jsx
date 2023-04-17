@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom/cjs/react-router-dom.min';
 import { getUser } from '../services/userAPI';
 import Carregando from './Carregando';
 
@@ -20,6 +21,9 @@ class Header extends React.Component {
     const { name, carregando } = this.state;
     return (
       <header data-testid="header-component">
+        <Link data-testid="link-to-search" to="/search">Pesquisar</Link>
+        <Link data-testid="link-to-favorites" to="/favorites">Músicas Favoritas</Link>
+        <Link data-testid="link-to-profile" to="/profile">Perfil</Link>
         {
           carregando ? (
             <Carregando />
