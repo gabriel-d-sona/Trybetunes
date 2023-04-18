@@ -22,8 +22,9 @@ class Login extends React.Component {
   };
 
   btn = async () => {
+    const { name } = this.state;
     this.setState({ carregando: true });
-    await createUser({ name: 'Name' });
+    await createUser({ name });
     this.setState({ carregando: false, redirect: true });
   };
 
