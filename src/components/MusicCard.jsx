@@ -1,10 +1,35 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
+import { addSong, getFavoriteSongs } from '../services/favoriteSongsAPI';
+import Carregando from './Carregando';
 
 export default class MusicCard extends Component {
-  render() {
-    const { trackName, artworkUrl100, previewUrl } = this.props;
+  state = {
+    carregando: false,
+    favorito: false,
+  };
+
+  favoriteClick = async ({ target }) => {
+    this.setState({ carregando: true });
+    const { song } = this.props;
+    
+    const { name } = target;
+    
+    this.setState({
+      [name]: target.checked,
+    });
+    
+    await addSong(song);
+    await getFavoriteSongs();
+
+    this.setState({ carregando: false });
+  };
+
+    render() {
+    const { trackName, artworkUrl100, previewUrl, trackId, } = this.props;
+    const { carregando, favorito } = this.state
     return (
+      carregando ?  <Carregando /> : (
       <div>
         <h2>{ trackName }</h2>
         <img src={ artworkUrl100 } alt={ trackName } />
@@ -13,8 +38,19 @@ export default class MusicCard extends Component {
           O seu navegador não suporta o elemento
           <code>audio</code>
         </audio>
-      </div>
-    );
+        <label data-testid={`checkbox-music-${trackId}`}>
+          Favorita
+          <input
+          type="checkbox"
+          name="favorito"
+          value={ favorito }
+          checked={ favorito }
+          onChange={ this.favoriteClick }
+          />          
+          </label>
+          </div>
+      )
+    )
   }
 }
 
